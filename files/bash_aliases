@@ -1,0 +1,5 @@
+alias wg-peer-config='qrencode -t ansiutf8 -r'
+alias wgdown='COMPOSE_FILE=/extra/wireguard/docker-compose.yml docker-compose stop'
+alias wglogs='COMPOSE_FILE=/extra/wireguard/docker-compose.yml docker-compose logs -tf --tail="50" '
+alias wgpull='COMPOSE_FILE=/extra/wireguard/docker-compose.yml docker-compose pull'
+alias wgup='COMPOSE_FILE=/extra/wireguard/docker-compose.yml docker-compose up -d'

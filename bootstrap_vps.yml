@@ -2,6 +2,7 @@
 - hosts: all
   vars_files:
     - vars/default.yml
+    - vars/private.yml
 
   tasks:
     - name: Make sure we have a 'wheel' group
@@ -19,17 +20,34 @@
 
     - name: Create default user
       user:
-        name: "{{ username }}"
+        name: "{{ admin_username }}"
         groups: wheel
         append: true
         shell: /bin/bash
         create_home: true
-        password: "{{ password }}"
+        password: "{{ admin_password }}"
         update_password: always
         state: present
 
     - name: Add authorized key
       authorized_key:
-        user: "{{ username }}"
+        user: "{{ admin_username }}"
         key: "{{ lookup('file', public_key) }}"
-  
+
+    - name: Upgrade packages
+      apt: upgrade=safe
+      become: yes
+
+    - name: Install packages
+      apt:
+        name:
+          - ufw
+        state: present
+        update_cache: yes
+      become: yes
+
+    - name: Enable firewall
+      ufw: state=enabled policy=deny
+
+    - name: Allow SSH
+      ufw: rule=allow port=22 proto=tcp

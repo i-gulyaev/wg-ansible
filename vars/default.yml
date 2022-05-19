@@ -1,4 +1,4 @@
 ---
-username: "vpsadmin1"
-password: "$6$43927$7wdpUlD55l4GpMZBpZmmAvjJbVdAxSv92PpSviCcmjvrvHHWjMikmYwkxKLrB3rzSfhx7M/ew8f.VcJ8rbon21"
-public_key: "~/.ssh/vps_id_rsa.pub"
+admin_username: "adminuser"
+admin_password: "pass"
+public_key: "~/.ssh/id_rsa.pub"

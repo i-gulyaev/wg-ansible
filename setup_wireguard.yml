@@ -1,0 +1,72 @@
+---
+- hosts: vpn
+  vars_files:
+    - vars/default.yml
+    - vars/private.yml
+  tasks:
+    - name: Upgrade packages
+      apt: upgrade=safe
+      become: yes
+
+    - name: Download installation script
+      get_url: url=https://get.docker.com dest=/tmp/get-docker.sh
+
+    - name: Run docker installation script
+      command: chdir=/tmp /bin/sh get-docker.sh
+
+    - name: Make sure we have a 'docker' group
+      group:
+        name: docker
+        state: present
+
+    - name: Add admin to the docker group
+      user:
+        name: "{{ admin_username }}"
+        groups: "docker"
+        append: true
+      become: yes
+      notify: reset connection
+
+    - name: Install packages
+      apt:
+        name:
+          - docker-compose
+          - qrencode
+          - emacs-nox
+        state: present
+        update_cache: yes
+      become: yes
+
+    - name: create directory for wireguard peer configurations
+      file:
+        path: /extra/wireguard/config
+        state: directory
+        owner: "{{ admin_username }}"
+        group: wheel
+        mode: 0775
+      become: yes
+
+    - name: Create wireguard configuration
+      template:
+        src: "files/docker-compose.yml.j2"
+        dest: "/extra/wireguard/docker-compose.yml"
+
+    - name: Allow VPN port
+      ufw: rule=allow port="{{ vpn_port }}" proto=tcp
+      become: yes
+
+    - name: Add bash aliases to admin shell
+      copy:
+        src: "files/bash_aliases"
+        dest: "/home/{{ admin_username }}/.bash_aliases"
+
+    - name: Start wireguard
+      docker_compose:
+        project_src: /extra/wireguard
+        files:
+          - docker-compose.yml
+        state: present
+
+  handlers:
+    - name: reset connection
+      meta: reset_connection
