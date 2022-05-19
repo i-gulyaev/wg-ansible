@@ -52,7 +52,7 @@
         dest: "/extra/wireguard/docker-compose.yml"
 
     - name: Allow VPN port
-      ufw: rule=allow port="{{ vpn_port }}" proto=tcp
+      ufw: rule=allow port="{{ vpn_port }}" proto=udp
       become: yes
 
     - name: Add bash aliases to admin shell

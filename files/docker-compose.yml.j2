@@ -21,7 +21,7 @@ services:
       - /extra/wireguard/config:/config
       - /lib/modules:/lib/modules
     ports:
-      - 51820:51820/udp
+      - {{ vpn_port }}:{{ vpn_port }}/udp
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
     restart: unless-stopped
