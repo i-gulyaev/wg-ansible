@@ -67,6 +67,17 @@
           - docker-compose.yml
         state: present
 
+    - name: Change ownership of Wireguard configuration files
+      file:
+        path: /extra/wireguard/config
+        state: directory
+        owner: "{{ admin_username }}"
+        group: wheel
+        mode: 0775
+        recurse: yes
+      become: yes
+
+
   handlers:
     - name: reset connection
       meta: reset_connection
