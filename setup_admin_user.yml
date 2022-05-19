@@ -1,0 +1,35 @@
+---
+- hosts: all
+  vars_files:
+    - vars/default.yml
+
+  tasks:
+    - name: Make sure we have a 'wheel' group
+      group:
+        name: wheel
+        state: present
+
+    - name: Allow 'wheel' group to have passwordless sudo
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        regexp: '^%wheel'
+        line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+        validate: '/usr/sbin/visudo -cf %s'
+
+    - name: Create default user
+      user:
+        name: "{{ username }}"
+        groups: wheel
+        append: true
+        shell: /bin/bash
+        create_home: true
+        password: "{{ password }}"
+        update_password: always
+        state: present
+
+    - name: Add authorized key
+      authorized_key:
+        user: "{{ username }}"
+        key: "{{ lookup('file', public_key) }}"
+  
