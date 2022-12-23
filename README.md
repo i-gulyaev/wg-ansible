@@ -12,11 +12,21 @@ Define following variables in `vars/private.yml` (create this file if needed, se
 
 ### Initial Server Bootstrap
 
-The `bootstrap_vps.yml` script creates an admin user for the specified server and enables firewall and configures SSH access to the server.
+1. Add new server to `hosts.yaml`.
 
 ```
-HOST_NAME=1.1.1.1
-ansible-playbook -l $HOST_NAME -u root --ask-pass bootstrap_vps.yml
+vpn:
+  hosts:
+    new-server:
+      ansible_host: 10.20.30.40
+      vpn_host: 10.20.30.40
+      vpn_port: 51820
+```
+2. Run `bootstrap_vps.yml` script.
+It creats an admin user for the specified server and enables firewall and configures SSH access to the server.
+
+```
+ansible-playbook -l new-server -u root --ask-pass bootstrap_vps.yml
 ```
 
 ### Setup Wireguard Server
