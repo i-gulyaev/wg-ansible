@@ -16,7 +16,7 @@ The `bootstrap_vps.yml` script creates an admin user for the specified server an
 
 ```
 HOST_NAME=1.1.1.1
-ansible-playbook -l $HOST_NAME -u root --ask-pass boostrap_vps.yml
+ansible-playbook -l $HOST_NAME -u root --ask-pass bootstrap_vps.yml
 ```
 
 ### Setup Wireguard Server
