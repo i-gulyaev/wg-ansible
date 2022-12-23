@@ -30,7 +30,7 @@
         state: present
 
     - name: Add authorized key
-      authorized_key:
+      ansible.posix.authorized_key:
         user: "{{ admin_username }}"
         key: "{{ lookup('file', public_key) }}"
 
