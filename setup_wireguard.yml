@@ -25,7 +25,9 @@
         groups: "docker"
         append: true
       become: yes
-      notify: reset connection
+
+    - name: Reset connection to pick up docker group
+      meta: reset_connection
 
     - name: Install packages
       apt:
@@ -61,11 +63,13 @@
         dest: "/home/{{ admin_username }}/.bash_aliases"
 
     - name: Start wireguard
-      docker_compose:
+      community.docker.docker_compose:
         project_src: /extra/wireguard
         files:
           - docker-compose.yml
+        pull: true
         state: present
+      tags: wgrun
 
     - name: Change ownership of Wireguard configuration files
       file:
@@ -77,7 +81,3 @@
         recurse: yes
       become: yes
 
-
-  handlers:
-    - name: reset connection
-      meta: reset_connection
