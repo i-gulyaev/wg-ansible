@@ -1,3 +1,17 @@
+# this is a hack
+
+# List all config names
+wg-list()
+{
+    ls -1 /extra/wireguard/config/ | grep peer_ | cut -d_ -f 2
+}
+
+# Get QR encoded config for name
+wg-config()
+{
+    qrencode -t ansiutf8 -r /extra/wireguard/config/peer_$1/peer_$1.conf
+}
+
 alias wg-peer-config='qrencode -t ansiutf8 -r'
 alias wgdown='COMPOSE_FILE=/extra/wireguard/docker-compose.yml docker-compose stop'
 alias wglogs='COMPOSE_FILE=/extra/wireguard/docker-compose.yml docker-compose logs -tf --tail="50" '
