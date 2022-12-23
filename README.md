@@ -4,7 +4,7 @@ This repository contains `ansible` scripts that help bootstrapping your own Wire
 
 
 ## Usage
-Define following variables in `vars/private.yml` (create this file if needed, see `vars/default.yml` as example).
+Define following variables in `vars/private.yml` (create this file if needed, use `vars/default.yml` as example).
 - `admin_username`: VPS user with administrative privileges.
 - `admin_password`: hashed sudo password for VPS admin (see [this](https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#how-do-i-generate-encrypted-passwords-for-the-user-module) for details).
 - `public_key`: path to a public SSH key used to provide password-less access to host for `admin_username`.
