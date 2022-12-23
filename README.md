@@ -15,7 +15,8 @@ Define following variables in `vars/private.yml` (create this file if needed, se
 The `bootstrap_vps.yml` script creates an admin user for the specified server and enables firewall and configures SSH access to the server.
 
 ```
-ansible-playbook -l hostname -u root --ask-pass boostrap_vps.yml
+HOST_NAME=1.1.1.1
+ansible-playbook -l $HOST_NAME -u root --ask-pass boostrap_vps.yml
 ```
 
 ### Setup Wireguard Server
