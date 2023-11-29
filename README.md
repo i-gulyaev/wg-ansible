@@ -1,7 +1,8 @@
 # Ansible Scripts for VPN Server Bootstrap
 
-This repository contains `ansible` scripts that help bootstrapping your own Wireguard VPN server.
+This repository contains `ansible` scripts that help bootstrapping your own Wireguard VPN server packaged as a docker container.
 
+More info here: https://docs.linuxserver.io/images/docker-wireguard/
 
 ## Usage
 Define following variables in `vars/private.yml` (create this file if needed, use `vars/default.yml` as example).

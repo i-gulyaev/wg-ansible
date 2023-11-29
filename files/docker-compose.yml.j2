@@ -14,7 +14,7 @@ services:
       - SERVERURL={{ vpn_host }} #optional
       - SERVERPORT={{ vpn_port }} #optional
       - PEERS={{ vpn_peers }} #optional
-      - PEERDNS=auto #optional
+      - PEERDNS={{ peer_dns if peer_dns is not none else 'auto' }} #optional
       - INTERNAL_SUBNET=10.9.0.0 #optional
       - ALLOWEDIPS=0.0.0.0/0 #optional
     volumes:

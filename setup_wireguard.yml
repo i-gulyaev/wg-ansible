@@ -52,7 +52,7 @@
       template:
         src: "files/docker-compose.yml.j2"
         dest: "/extra/wireguard/docker-compose.yml"
-
+        
     - name: Allow VPN port
       ufw: rule=allow port="{{ vpn_port }}" proto=udp
       become: yes
